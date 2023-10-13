@@ -1,10 +1,12 @@
 (function () {
-    var overlay; 
+    //globally variabels
+    var overlay, sizeInput; 
 
     //function init
     function init() {
         //config user interference
         setupModal();
+        setupControls();
         generateBoard(2);
 
         console.log(generateTiles(4));
@@ -15,7 +17,9 @@
         var movesText = document.getElementById("moves");
         //set count to 0
         movesText.textContent = 0;
+        //empty board
         emptyBoard();
+        //generate board
         generateBoard(2);
     }
 
@@ -30,7 +34,13 @@
     //function to generate board with parameter size
     function generateBoard(size) {
         var board = document.getElementById("board");
-        var tiles = generateTiles(size);
+        //create variable for the tiles
+        var tiles;
+        //loop to see if it is solvable
+        do {
+            tiles = generateTiles(size);
+        } while (!isSolvable(tiles) || isSolved(tiles));
+        // var tiles = generateTiles(size);
         //for loop to create tr and td
         for (var i = 0; i < size; i++) {
             //tr
@@ -56,6 +66,7 @@
             //append row to board
             board.appendChild(outputRow);
         }
+        console.log(tiles + "tiles");
     }
 
     //function for random number
@@ -89,6 +100,12 @@
             }
         }
         return tileArray;
+    }
+
+    //function for game size and new game
+    function setupControls() {
+        var startButton = document.getElementById("startGame");
+        startButton.addEventListener("click", startNewGame);
     }
 
     //modal functions
@@ -203,10 +220,6 @@
         return true;
 
     }
-
-
-
-
 
     //test för olika random siffror med avrundning uppåt o neråt
     // var randNum = Math.random(); 
