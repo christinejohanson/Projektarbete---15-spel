@@ -7,9 +7,7 @@
         //config user interference
         setupModal();
         setupControls();
-        generateBoard(2);
-
-        console.log(generateTiles(4));
+        startNewGame();
     }
 
     //function to start new game
@@ -19,8 +17,12 @@
         movesText.textContent = 0;
         //empty board
         emptyBoard();
+        //take the input size
+        var size = sizeInputEl.value;
         //generate board
-        generateBoard(2);
+        generateBoard(size);
+        //update headline w correct size
+        document.getElementById("titleNumber").innerText = (size * size) - 1;
     }
 
     function emptyBoard() {
@@ -57,7 +59,6 @@
                     outputTile.innerText = tiles[i][j];
                     //add eventlistner on tile
                     outputTile.addEventListener("click", moveThisTile, false);
-
                 }
 
                 //append tile to row
@@ -69,9 +70,8 @@
         console.log(tiles + "tiles");
     }
 
-    //function for random number
+    //function for random number on the tiles
     function generateTiles(size) {
-
         //empty array
         var randomArray = [];
         //fill the array with right amount of numbers
@@ -106,6 +106,14 @@
     function setupControls() {
         var startButton = document.getElementById("startGame");
         startButton.addEventListener("click", startNewGame);
+        //size of the board
+        sizeInputEl = document.getElementById("boardSize");
+        //create eventlistener to look for input
+        sizeInputEl.addEventListener("input", function () {
+            //get the span element
+            var sizeDisplay = document.getElementById("currentSize");
+            sizeDisplay.innerHTML = this.value + " &times " + this.value;
+        });
     }
 
     //modal functions
