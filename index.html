@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="utf-8" />
+    <title>Femtonspel</title>
+    <link rel="stylesheet" href="css/fifteen.css" />
+  </head>
+  <body>
+    <h1><span id="titleNumber">16</span>-spel</h1>
+    <div id="score">
+      Antal drag: <span id="moves" class="highlightNumber">0</span>
+    </div>
+    <table id="board"></table>
+    <div id="controls">
+      <label for="boardSize">
+        Storlek: <span id="currentSize" class="highlightNumber">4 x 4</span>
+      </label>
+      <input
+        type="range"
+        name="boardSize"
+        id="boardSize"
+        value="4"
+        min="2"
+        max="12"
+      />
+      <button id="startGame">Starta nytt spel</button>
+    </div>
+    <div id="winModal" class="modal off-screen">
+      <h1>GGWP</h1>
+      <p>
+        Bra gjort! Du lyckades lösa spelet på <span id="winMoves">0</span> drag.
+      </p>
+      <button id="restartGame">Börja om</button>
+    </div>
+    <script src="js/util.js"></script>
+    <script src="js/fifteen.js"></script>
+  </body>
+</html>
