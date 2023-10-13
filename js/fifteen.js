@@ -1,10 +1,32 @@
-(function FifteenGame() {
+(function () {
+    var overlay; 
 
     //function init
     function init() {
+        //config user interference
+        setupModal();
         generateBoard(2);
+
         console.log(generateTiles(4));
     }
+
+    //function to start new game
+    function startNewGame() {
+        var movesText = document.getElementById("moves");
+        //set count to 0
+        movesText.textContent = 0;
+        emptyBoard();
+        generateBoard(2);
+    }
+
+    function emptyBoard() {
+        var board = document.getElementById("board");
+        //if there is child elements
+        while (board.firstChild) {
+            board.firstChild.remove();
+        }
+    }
+
     //function to generate board with parameter size
     function generateBoard(size) {
         var board = document.getElementById("board");
@@ -71,13 +93,31 @@
 
     //modal functions
     function setupModal() {
-        
+        //new div that is the background
+        overlay = document.createElement("div");
+        overlay.className = "overlay";
+        var restartButton = document.getElementById("restartGame");
+        //event listener on button
+        restartButton.addEventListener("click", function () {
+            closeModal();
+            startNewGame();
+        });
     }
 
     function openModal() {
         var winModal = document.getElementById("winModal");
         //remove class offscreen
         winModal.classList.remove("off-screen");
+        //element that covers everything behind modal window
+        document.body.appendChild(overlay);
+    }
+
+    function closeModal() {
+        var winModal = document.getElementById("winModal");
+        //add class offscreen
+        winModal.classList.add("off-screen");
+        //remove background
+        document.body.removeChild(overlay);
     }
      
     //function for move the tiles
