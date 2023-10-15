@@ -7,6 +7,7 @@
         //config user interference
         setupModal();
         setupControls();
+        setupBoard();
         startNewGame();
     }
 
@@ -129,6 +130,23 @@
         });
     }
 
+    //change board with move error
+    function setupBoard() {
+        //variable for table board
+        var board = document.getElementById("board");
+        //eventlistener that listens to moveerror
+        board.addEventListener("moveError", function () {
+            //create element variable instead of only this
+            var el = this;
+            //add class
+            el.className = "wrong-move";
+            //remove classname after 200 millisec
+            setTimeout(function () {
+                el.className = "";
+            }, 200);
+        });
+    }
+
     function openModal() {
         var winModal = document.getElementById("winModal");
         //remove class offscreen
@@ -164,7 +182,11 @@
             incrementMoves();
         }
         else {
-            alert("Den här brickan går ej att flytta!");
+            //create error event
+            var errorEvent = new Event("moveError", { "bubbles": true });
+            //to fire the event
+            this.dispatchEvent(errorEvent);
+            // alert("Den här brickan går ej att flytta!");
         }
     }
 
